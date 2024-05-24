@@ -19,7 +19,7 @@ This script batch transcribes audio files in a directory to text with timestamps
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-repo/whisper-transcription.git
+    git clone https://github.com/meadow-kun/batch-whisper.git
     cd whisper-transcription
     ```
 
