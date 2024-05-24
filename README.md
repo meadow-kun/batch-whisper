@@ -26,7 +26,7 @@ This script batch transcribes audio files in a directory to text with timestamps
 2. **Create and activate a new conda environment:**
 
     ```bash
-    conda create -n whisper-env python=3.8
+    conda create -n whisper-env python=3.12
     conda activate whisper-env
     ```
 
