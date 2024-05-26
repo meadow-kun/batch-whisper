@@ -17,12 +17,12 @@ def transcribe_audio_to_text_with_timestamps(audio_path, output_dir, verbose=Fal
         # Load the model
         if verbose:
             logging.info(f"Loading Whisper model for {audio_path}...")
-        model = whisper.load_model("medium.en")
+        model = whisper.load_model("large")
 
         # Perform the transcription
         if verbose:
             logging.info(f"Transcribing {audio_path}...")
-        result = model.transcribe(audio_path)
+        result = model.transcribe(audio_path, language="sv", verbose=True)
 
         # Write the transcription with timestamps to a text file
         output_path = os.path.join(output_dir, "transcript.txt")
