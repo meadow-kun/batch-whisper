@@ -9,15 +9,23 @@ import logging
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+# Load the model globally
+model = None
+
+def load_model(verbose=False):
+    global model
+    if model is None:
+        if verbose:
+            logging.info("Loading Whisper model...")
+        model = whisper.load_model("large")
+
 def transcribe_audio_to_text_with_timestamps(audio_path, output_dir, verbose=False):
     try:
         # Ensure the output directory exists
         os.makedirs(output_dir, exist_ok=True)
 
         # Load the model
-        if verbose:
-            logging.info(f"Loading Whisper model for {audio_path}...")
-        model = whisper.load_model("large")
+        load_model(verbose)
 
         # Perform the transcription
         if verbose:
@@ -63,7 +71,7 @@ def process_directory(directory_path, verbose=False):
     args = [(audio_path, directory_path, verbose) for audio_path in audio_files]
 
     # Limit the number of workers to avoid overloading the system
-    num_workers = min(cpu_count() // 2, len(audio_files))
+    num_workers = min(max(1, cpu_count() // 4), len(audio_files))
     with Pool(num_workers) as pool:
         list(tqdm(pool.imap(process_file, args), total=len(audio_files), desc="Processing audio files", unit="file"))
 
